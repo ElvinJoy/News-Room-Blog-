@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Simple Blog</title>
+    <link rel="stylesheet" href="/css/blog.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<body>
+    <header>
+      <!-- <h1 id="home">h</h1> -->
+        <h1>News Room</h1>
+    </header>
+    <nav class="home">
+        <a href="/Logout">Logout</a>
+        <a href="/admin">Admin</a>
+         <a href="/addArticle">Add articles</a>
+        <a href="/manageArticles">Manage Articles</a>
+    </nav>
+
+    <div class="content">
+        <div class="news-section">
+            <h2 class="news-title">Breaking News: Important Event</h2>
+            <p class="news-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+        </div>
+
+        <div class="news-section">
+            <h2 class="news-title">Technology Advancements</h2>
+            <p class="news-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+        </div>
+
+        <div class="news-section">
+            <h2 class="news-title">Entertainment Highlights</h2>
+            <p class="news-content">Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+        </div>
+
+        <div class="news-section">
+            <h2 class="news-title">Sports Update</h2>
+            <p class="news-content">Sed posuere consectetur est at lobortis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+        </div>
+    </div>
+
+ 
+    <div class="d-flex justify-content-center">
+      <!-- First set of cards -->
+      <div class="m-5">
+        <div class="card mb-3 mr-3" style="width: 18rem; height: 26rem;">
+          <img src="/assets/politics.jpeg" class="card-img-top" alt="politics">
+          <div class="card-body">
+            <h5 class="card-title">politics</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">read more</a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="m-5">
+        <div class="card mb-3 mr-3" style="width: 18rem; height: 26rem;">
+          <img src="/assets/sports.jpeg" class="card-img-top" alt="sports">
+          <div class="card-body">
+            <h5 class="card-title">sports</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">read more</a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="m-5">
+        <div class="card mb-3 mr-3" style="width: 18rem; height: 26rem;">
+          <img src="/assets/food1.jpg" class="card-img-top" alt="food">
+          <div class="card-body">
+            <h5 class="card-title">food</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">read more</a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="m-5">
+        <div class="card mb-3 mr-3" style="width: 18rem; height: 26rem;">
+          <img src="/assets/travell.jpeg" class="card-img-top" alt="travel">
+          <div class="card-body">
+            <h5 class="card-title">travel</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- rectangle cards ----------------------------------------------------------------------- -->
+
+    <div class="box">
+      <% blogs.reverse().forEach(function(Blog) { %>
+      <% adds.reverse().forEach(function (Add) { %>        
+          <% data.reverse().forEach(function(topic) { %>
+              <% if (Add.user_id == Blog._id && Add.topic == topic._id){ %>
+           
+                    <div class="container my-5">
+                      <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg position-relative">
+                        <div class="col-lg-12 p-4 p-sm-5 pt-lg-3">
+                          <div class="card mb-3">
+                            <div class="card-body">
+                              <h5 class="card-title"><strong>Title:</strong> <%= Add.title %></h5>
+                              <!-- Add Name Section Here -->
+                              <p class="card-text"><strong>Topic:</strong> <%= topic.topic %></p>
+                              <p class="card-text"><strong>Content:</strong> <%= Add.content %></p>
+                              <p class="card-text"><strong>Uploaded By:</strong> <%= Add.name %></p>
+                              <p class="card-text"><strong>Date:</strong> <%= Add.Date %></p>
+                            </div>
+                            <!-- Like and Comment buttons at the bottom right -->
+                            <div class="card-buttons position-absolute bottom-0 end-0 mb-3 me-3">
+                              <button onclick="handleLike('<%= Add.id %>')" id="likeButton<%= Add._id %>">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="<%= Add.isLiked ? 'red' : 'lightgray' %>">
+                                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C15.09 3.81 16.76 3 18.5 3 21.58 3 24 5.42 24 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                              </button>
+                              <button onclick="handleComment('<%= Add._id %>')">Comment</button>
+                            </div>
+                          </div>
+                          <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                            <a href="/admin">
+                              <button type="button" class="btn btn-primary btn-lg px-4 me-md-0 mt-5 fw-bold">View</button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>     
+  <% }; %> 
+  <% }); %>  
+<% }); %>
+<% }); %>
+    </div>
+
+</body>
+</html>
+    

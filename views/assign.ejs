@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Person</title>
+  <link rel="stylesheet" href="/css/useradd.css">
+</head>
+<body>
+  
+  <div class="add">
+    <h1>Assign / Add   Topic Managers</h1>
+    <form action="/assign" method="post" enctype="application/x-www-form-urlencoded">
+      
+
+      <input type="text" placeholder="name" id="name" class="name" name="name">
+      <input type="text" placeholder="email" id="email" class="email" name="email">
+      
+        <select id="topic" name="topic" class="topic">
+          <% data.reverse().forEach(function(topic){ %>
+          <option value="<%= topic._id %>"><%= topic.topic %></option>
+          
+          <% }) %>
+        </select>
+
+      <input type="password" placeholder="password" id="password" class="password" name="password">
+
+      <% if (error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>

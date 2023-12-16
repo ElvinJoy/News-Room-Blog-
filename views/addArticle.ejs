@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>add articles</title>
+  <link rel="stylesheet" href="/css/useradd.css">
+</head>
+<body>
+  <div class="add">
+    <form action="/addArticle" method="post" enctype="application/x-www-form-urlencoded">
+      <input type="text" placeholder="title" id="title" class="title" name="title">
+      <select id="topic" name="topic" class="topic">
+        <% data.reverse().forEach(function(topic){ %>
+          <option value="<%= topic._id %>"><%= topic.topic %></option>
+          
+          <% }) %>
+      </select>
+      <textarea rows="10" cols="10" placeholder="content" name="content" class="content" id="content"></textarea>
+    
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</body>
+</html>
+

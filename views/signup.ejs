@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+<link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+    <nav>
+        <!-- <a href="./">Home</a>
+        <a href="/signup">Signup</a>
+        <a href="/loginForm">Login</a> -->
+        <!-- <a href="/admin">Admin</a> -->
+    </nav>
+    <form method="post">
+        <h1>Signup form</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <div id="err"><%= data %></div>
+
+        <button type="submit">Sign Up</button>
+        <div class="user">already a user ? then click here <a href="./loginForm"><span class="login">Login</span></a></div>
+
+    </form>
+</body>
+</html>

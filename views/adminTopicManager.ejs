@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <nav class="home">
+        <!-- <span class="welcome-message">Welcome Master!</span> -->
+        <a href="/loginForm">Logout</a>
+        <a href="/dashboard">Home</a>
+      </nav>
+    <h1>assigned topic managers</h1>
+    <table class="table_topicManager">
+        <tr align="center">
+            <!-- <td>Si.no</td> -->
+            <td>Name</td>
+            <td>Email</td>
+            <td class="topic">Topic Assigned</td>
+            <td>Accept</td>
+            <td>Reject Topic Manager</td>
+            <td>Status</td>
+        </tr>
+      
+        <% managers.reverse().forEach((manager) => { %>
+          
+            <tr align="center">
+              
+                <td><%= manager.name %></td>
+                <td><%= manager.email %></td>
+         <% data.forEach(function(topics){ %> <% if(topics._id == manager.topic){%>
+                 <td> <%= topics.topic %></td>
+                  <% } %> <% }); %>
+                <td><a href="/accept/<%= manager._id %>"><button class="accept" onclick="return confirm('are you sure master')">accept</button></a></td>
+                <td><a href="/delete/<%= manager._id %>" onclick="return confirm('Are you sure, master?')"><button class="remove">Delete</button></a></td>
+                <td>
+                    <div class="text-success"><% if(manager.status===1){ %><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path fill="#12f337" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg><% } %></div>
+                    <div class="text-danger"><% if(manager.status===2){ %><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path fill="#fa0000" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg><% } %></div>
+                </td>
+            </tr>
+        <% }); %>
+      
+    </table>
+</body>
+</html>
