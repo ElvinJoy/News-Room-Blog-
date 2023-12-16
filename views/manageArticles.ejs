@@ -3,35 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>manage articles</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to the manage articles page</h1>
-    
-    <% articles.forEach(article => { %>
-      <div class="container my-5">
-        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-          <div class="col-lg-12 p-4 p-sm-5 pt-lg-3">
-            <div class="card mb-3">
-              <div class="card-body">
-                <h5 class="card-title"><strong>Title:</strong> <%= article.title %></h5>
-                <% topicsData.forEach(topic => { %>
-                  <p class="card-text"><strong>Topic:</strong> <%= topic.topic %></p>
-                <% }); %>
-                <p class="card-text"><strong>Content:</strong> <%= article.content %></p>
-                <p class="card-text"><strong>Uploaded By:</strong> <%= article.name %></p>
-                <p class="card-text"><strong>Date:</strong> <%= article.Date %></p>
-              </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-              <a href="/admin">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-0 mt-5 fw-bold">View</button>
-              </a>
+    <div class="box">
+             <% blogs.reverse().forEach(function(Blog) { %>
+             <% data.forEach(function (Add) { %>       
+            <% Topic.reverse().forEach(function(topic) { %>
+           <% if (Add.user_id == Blog._id && Add.topic == topic._id){ %>
+
+            
+          <div class="px-4 py-5 my-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/image/Firewatch background ·① Download free awesome HD wallpapers for desktop, mobile, laptop in any resolution_ desktop, Android, iPhone, iPad 1920x1080, 1366x768, 360x640, 1024x768 etc_ WallpaperTag.jpeg" alt="" width="72" height="57">
+            <h1 class="display-5 fw-bold text-body-emphasis"><%=Add.title%></h1>
+            <div class="col-lg-6 mx-auto"><h6><%= topic.topic %></h6>
+              <p class="lead mb-4"><%=Add.content%></p>
+              <p><%= Add.date %></p>
+              <p><%= Add.name %></p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+               <a href="/update/<%= Add._id %>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"
+                  width="30px" height="15px"> <path
+                      d="M 22.828125 3 C 22.316375 3 21.804562 3.1954375 21.414062 3.5859375 L 19 6 L 24 11 L 26.414062 8.5859375 C 27.195062 7.8049375 27.195062 6.5388125 26.414062 5.7578125 L 24.242188 3.5859375 C 23.851688 3.1954375 23.339875 3 22.828125 3 z M 17 8 L 5.2597656 19.740234 C 5.2597656 19.740234 6.1775313 19.658 6.5195312 20 C 6.8615312 20.342 6.58 22.58 7 23 C 7.42 23.42 9.6438906 23.124359 9.9628906 23.443359 C 10.281891 23.762359 10.259766 24.740234 10.259766 24.740234 L 22 13 L 17 8 z M 4 23 L 3.0566406 25.671875 A 1 1 0 0 0 3 26 A 1 1 0 0 0 4 27 A 1 1 0 0 0 4.328125 26.943359 A 1 1 0 0 0 4.3378906 26.939453 L 4.3632812 26.931641 A 1 1 0 0 0 4.3691406 26.927734 L 7 26 L 5.5 24.5 L 4 23 z" /></svg></a> 
+                      <a class="remove" href="/remove/<%= Add._id %>" onclick="return confirm('Are you sure?')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px" height="15px">
+                            <path d="M 10.806641 2 C 10.289641 2 9.7956875 2.2043125 9.4296875 2.5703125 L 9 3 L 4 3 A 1.0001 1.0001 0 1 0 4 5 L 20 5 A 1.0001 1.0001 0 1 0 20 3 L 15 3 L 14.570312 2.5703125 C 14.205312 2.2043125 13.710359 2 13.193359 2 L 10.806641 2 z M 4.3652344 7 L 5.8925781 20.263672 C 6.0245781 21.253672 6.877 22 7.875 22 L 16.123047 22 C 17.121047 22 17.974422 21.254859 18.107422 20.255859 L 19.634766 7 L 4.3652344 7 z"/>
+                        </svg>
+                    </a>
+                    </div>
             </div>
           </div>
-        </div>
-      </div>
-    <% }); %>
+    </tr>
+    <% }; %> 
+    <% }); %>  
+  <% }); %>
+  <% }); %>
+</div>
+    
 </body>
 </html>

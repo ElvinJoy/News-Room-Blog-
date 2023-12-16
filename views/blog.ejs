@@ -117,12 +117,14 @@
                                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C15.09 3.81 16.76 3 18.5 3 21.58 3 24 5.42 24 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                                 </svg>
                               </button>
-                              <button onclick="handleComment('<%= Add._id %>')">Comment</button>
+                              
+                              
+                              <button onclick="handleComment('<%= adds._id %>')">Comment</button>
                             </div>
                           </div>
                           <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
                             <a href="/admin">
-                              <button type="button" class="btn btn-primary btn-lg px-4 me-md-0 mt-5 fw-bold">View</button>
+                              <button type="button" class="btn btn-primary btn-lg px-4 me-md-0 mt-5 fw-bold">View More</button>
                             </a>
                           </div>
                         </div>
@@ -133,6 +135,23 @@
 <% }); %>
 <% }); %>
     </div>
+
+<script>
+  function handleLike(blogId) {
+    var likeButton = document.getElementById('likeButton' + blogId);
+    var svg = likeButton.querySelector('svg');
+    
+    // Check if the blog post is liked
+    var isLiked = svg.getAttribute('fill') === 'red';
+
+    // Update the SVG color based on the like status
+    svg.setAttribute('fill', isLiked ? 'lightgray' : 'red');
+
+    // You may want to send an AJAX request to update the like status on the server
+    // Add your code here to handle the server-side logic
+  }
+</script>
+
 
 </body>
 </html>

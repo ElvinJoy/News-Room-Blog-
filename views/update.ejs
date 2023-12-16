@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/useradd.css">
+</head>
+<body>
+    <div class="add">
+        <form  method="post">
+          
+          
+          <input type="text" placeholder="Tittle" id="topic" value="<%= person.title  %>" class="name" name="title">
+          
+          
+          <select id="topic" name="topic" class="topic">
+            <% Topic.reverse().forEach(function(topic){ %>
+              <option value="<%= topic._id %>"><%= topic.topic %></option>
+              <% }) %>
+          <select>
+     
+          <textarea id="content" rows="15" value="<%= person.content %>" name="content" required><%= person.content %></textarea>
+
+
+          <button type="submit">update</button>
+        </form>
+      </div>
+      
+</body>
+</html>

@@ -11,8 +11,7 @@ var addSchema = mongoose.Schema({
     status: Number,
 });
 
-// Define the Add model
+
 var Add = mongoose.model("Add", addSchema);
 
-// Export the Add model
 module.exports = Add;

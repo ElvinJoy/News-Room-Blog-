@@ -154,7 +154,7 @@ router.get('/accept/:id', async (req, res) => {
 });
 
 
-router.get("/adminTopicManager", async (req, resp) => {
+router.get("/adminTopicManager", checkSignIn, async (req, resp) => {
   manager.find(function(req, res){
      topics.find(function(reqest,response){
       resp.render("adminTopicManager", { managers :res ,data:response});
@@ -170,7 +170,7 @@ router.get("/adminTopicManager", async (req, resp) => {
 });  }) })
 
 
-router.get('/assign', (req, res) => {
+router.get('/assign', checkSignIn, (req, res) => {
   topics.find((err, response) => {
     if (err) {
       console.error(err);

@@ -221,29 +221,80 @@ router.post('/addArticle', async function(req, res) {
 });
 
 
+// router.get("/manageArticles", checkSignIn, async (req, res) => {
+//   try {
+//     const user_id = req.session.user._id;
+//     console.log(user_id);
+    
+//     // Retrieve articles based on user_id
+//     const articles = await Add.find({ user_id });
+
+//     // Extract topic IDs from articles
+//     const topicIds = articles.map(article => article.topic);
+//     console.log("topicIds", topicIds);
+
+//     // Retrieve topics based on topic IDs using Promise.all
+//     const topicsData = await Promise.all(topicIds.map(topicId => Topic.findById(topicId)));
+//     console.log("topicsData", topicsData);
+
+//     console.log(articles);
+//     res.render("manageArticles", { articles, topicsData });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+
 router.get("/manageArticles", checkSignIn, async (req, res) => {
   try {
-    const user_id = req.session.user._id;
-    console.log(user_id);
-    
-    // Retrieve articles based on user_id
-    const articles = await Add.find({ user_id });
-
-    // Extract topic IDs from articles
-    const topicIds = articles.map(article => article.topic);
-    console.log("topicIds", topicIds);
-
-    // Retrieve topics based on topic IDs using Promise.all
-    const topicsData = await Promise.all(topicIds.map(topicId => Topic.findById(topicId)));
-    console.log("topicsData", topicsData);
-
-    console.log(articles);
-    res.render("manageArticles", { articles, topicsData });
+    const user_id = req.session.user._id
+    var Topic = await  topics.find();
+    const data = await Add.find({ status: 0, user_id }).exec();
+    const blogs = await blog.find({});
+    res.render("manageArticles" , { data , Topic , blogs});
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error in fetching articles:", error);
+    res.status(500).json({ message: 'Error in fetching articles' });
   }
 });
+
+router.get("/update/:id", checkSignIn, async function (req, res) {
+  try {
+    const { id } = req.params;
+    var Topic = await topics.find();
+    const person = await Add.findById(id);
+    res.render("update", { person , Topic });
+  } catch (err) {
+    console.error("Error finding person for update:", err);
+    res.json({ message: "Error finding person for update" });
+  }
+});
+
+router.post("/update/:id", async function (req, res) {
+  try {
+    const updatedBlog = await Add.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    console.log(updatedBlog);
+    res.redirect("/dashboard?message=updated");
+  } catch (err) {
+    console.error("Error updating blog:", err);
+    res.json({ message: "Error updating blog" });
+  }
+});
+
+router.get('/remove/:id', async (req, res) => {
+  try {
+    const removedArticle = await Add.findByIdAndDelete(req.params.id);
+    if (!removedArticle) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+    res.redirect('/dashboard'); 
+  } catch (error) {
+    console.error("Error deleting article:", error);
+    res.status(500).json({ message: 'Error in deleting article' });
+  }
+});
+
 
 router.get('/Logout', function(req, res) {
   const data = 'Invalid email or password';
