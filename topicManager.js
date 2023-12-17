@@ -3,13 +3,11 @@ const router = express.Router();
 
 const blog = require("./models/person");
 const Add = require("./models/add");
-const manager = require("./models/manager");
 const topics = require("./models/topic");
-
-
+const Manager = require("./models/manager");
 
 function checkSignIn(req, res, next) {
-  if (req.session.user) {
+  if (req.session.manager) {
     next();
   } else {
     res.redirect('/signup');
@@ -18,49 +16,100 @@ function checkSignIn(req, res, next) {
   }
 }
 
-router.get('/topicManagerLogin', function(req , res){
-  res.render("topicManagerLogin",{
-    data : " "
-  })
+router.get('/topicManagerLogin', function(req, res) {
+  res.render("topicManagerLogin", { data: " " });
 });
 
+router.post('/topicManagerLogin', async function(req, res) {
+  var managerInfo = req.body;
 
-router.post('/topicManagerLogin', async (req, res) => {
-  const personInfo = req.body;
-  const data = 'Invalid email or password';
+  if (!managerInfo.email || !managerInfo.password) {
+    return res.render('topicManagerLogin', {
+      data: 'Please provide both email ID and password.',
+    });
+  }
 
   try {
-    var managers = await manager.findOne({ email: personInfo.email, password: personInfo.password });
-    if (managers) {
-        if ( managers.status === 1) {
-          req.session.user = managers;
-          res.redirect('/topicManager');
-        } else if (managers.status === 2) {
-          res.render("topicManagerLogin", { data: 'You have been banned' });
-        } else {
-          res.render("topicManagerLogin", { data: 'Invalid manager details' });
-        }
-     
-    } else {
-      res.render("topicManagerLogin", { data: data });
+    const managerData = await Manager.findOne({
+      email: managerInfo.email,
+      password: managerInfo.password,
+    });
+    console.log(managerData.topic)
+    if (!managerData) {
+      return res.render('topicManagerLogin', {
+        data: 'Invalid email or password.',
+      });
     }
+
+    if (managerData.status === 2) {
+      return res.render('topicManagerLogin', {
+        data: 'You have been revoked by admin',
+        type: 'error',
+      });
+    }
+
+    req.session.manager = managerData;
+    return res.redirect('/topicManager');
   } catch (err) {
     console.error(err);
-    res.send('Error checking login credentials');
+    return res.status(500).send('Internal Server Error');
   }
 });
 
 
-router.get('/topicManager', async (req, res) => {
+
+router.get('/topicManager',checkSignIn, async (req, res) => {
   try {
-      const adds = await Add.find();
-      const topic = await topics.find(); 
-      res.render('topicManager', { adds ,}); 
+    const manager = req.session.manager;
+    const adds = await Add.find();
+    const topic = await topics.find();
+    const managersData = await Manager.find({}); 
+
+    res.render('topicManager', { adds, topic, managersData , manager});
   } catch (error) {
-      console.error('Error fetching data from the database:', error);
-      res.status(500).send('Internal Server Error');
+    console.error('Error fetching data from the database:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
+
+router.get('/delete/:id', async (req, res) => {
+  try {
+    const removedArticle = await Add.findByIdAndDelete(req.params.id);
+    if (!removedArticle) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+    res.redirect('/topicManager'); 
+  } catch (error) {
+    console.error("Error deleting article:", error);
+    res.status(500).json({ message: 'Error in deleting article' });
+  }
+});
+
+
+router.get("/acceptarticle/:Id", async (req, res) => {
+  const Id = req.params.Id;
+
+  try {
+    const updatedid = await Add.findByIdAndUpdate(
+      Id,
+      { $set: { status: 1 } },
+      { new: true }
+    );
+
+    if (!updatedid) {
+      return res.status(404).send("Person not found");
+    }
+
+    res.redirect("/topicManager?message=accepted");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating status");
+  }
+});
+
+
+
+
 
 
 router.get('/Logout', function(req, res) {
@@ -70,13 +119,10 @@ router.get('/Logout', function(req, res) {
       if (err) {
         return next(err);
       } else {
-        return res.render('adminLogin');
+        return res.render('topicManagerLogin');
       }
     });
   }
 });
-
-
-
 
 module.exports = router;

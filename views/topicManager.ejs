@@ -3,29 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>topic manager</title>
-    <link rel="stylesheet" href="/css/topicManager.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/useradd.css">
 </head>
 <body>
     <nav class="home">
-        <a href="/">Logout</a>
-        <a href="/">Admin</a>
-         <a href="/">Add articles</a>
-        <a href="/">Manage Articles</a>
+        <a href="/Logout">Logout</a>
     </nav>
-    <h1>welcome to topic manager</h1>
-    <table class="table_topicManager">
-        <tr align="center">
-            <td>Si.no</td>
-            <td>Name</td>
-            <td>Title</td>
-            <td>Date</td>
-            <td>Accept Article</td>
-            <td>Reject Article</td>
-            <td>Status</td>
-        </tr>
-      
-       
-    </table>
+  
+
+    <!-- Assuming this is your topicManager.ejs template -->
+<!-- ... (other HTML code) ... -->
+
+<div class="left sports">
+  <h1>Topic Manager :  <%= manager.name %></h1>
+    
+   
+        <% adds.reverse().forEach(function(art) { %>
+            
+
+            <% if (art.topic == manager.topic && art.status === 0 ) { %>
+      <div class="card mt-4">
+        <div class="card-body">
+          <div class="content">
+           
+                <div class="card mt-3"> 
+                  <div class="card-body">
+                    <h3 class="card-title">Title: <%= art.title %></h3>
+                    <% topic.reverse().forEach(function(top) { %>
+                        
+                        <% if ( manager.topic == top._id) { %> 
+                    <h6 class="card-subtitle mb-2 text-muted">topic :<%= top.topic %></h6>
+                    <% } %>
+                    <% }) %>
+                    <p class="card-text">Cntent :<%= art.content %></p>
+                    <h6 class="card-subtitle mb-2 text-muted">Uploaded By: <%= art.name %></h6>
+                    <h6 class="card-subtitle mb-2 text-muted">date :<%= art.Date %></h6>
+                    <a href="/acceptarticle/<%=art._id%>" class="card-link">Accept</a>
+                    <a href="/delete/<%=art._id%>" class="card-link">Reject</a>
+                  </div>
+                </div>
+           
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <% }) %>
+    
+ 
+  </div>
+  
+  
+  <!-- ... (other HTML code) ... -->
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -35,9 +35,8 @@ router.use(function(err, req, res, next) {
 router.get('/dashboard', checkSignIn, async (req, res) => {
   try {
     const topic = await topics.find(); 
-    const adds = await Add.find({ status: 0 });
+    const adds = await Add.find({ status: 1 });
     const blogs = await blog.find(); 
-    // console.log(topic,adds,blogs);
 
     res.render('blog', { adds, data: topic ,blogs:blogs});
   } catch (error) {
@@ -45,18 +44,6 @@ router.get('/dashboard', checkSignIn, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-// router.get("/dashboard", checkSignIn, async  (req, res) => {
-//   try {
-//     var topics = await Topic.find();
-//     const store = await Add.find({ status: 0 }).exec();
-//     const blogs = await blog.find({});
-//     res.render("blog/", { store , topics , blogs});
-//   } catch (err) {
-//     console.error("Error fetching data from the database:", err);
-//     res.render("blog", { error: "Error fetching data from the database" });
-//   }
-// });
 
 
 
@@ -220,30 +207,6 @@ router.post('/addArticle', async function(req, res) {
   }
 });
 
-
-// router.get("/manageArticles", checkSignIn, async (req, res) => {
-//   try {
-//     const user_id = req.session.user._id;
-//     console.log(user_id);
-    
-//     // Retrieve articles based on user_id
-//     const articles = await Add.find({ user_id });
-
-//     // Extract topic IDs from articles
-//     const topicIds = articles.map(article => article.topic);
-//     console.log("topicIds", topicIds);
-
-//     // Retrieve topics based on topic IDs using Promise.all
-//     const topicsData = await Promise.all(topicIds.map(topicId => Topic.findById(topicId)));
-//     console.log("topicsData", topicsData);
-
-//     console.log(articles);
-//     res.render("manageArticles", { articles, topicsData });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
 
 
 router.get("/manageArticles", checkSignIn, async (req, res) => {

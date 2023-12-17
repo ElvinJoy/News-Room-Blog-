@@ -19,12 +19,6 @@ function checkSignIn(req, res, next) {
   }
 }
 
-router.get("/adminlogin", (req, res) => {
-  const data = "";
-  res.render("adminLogin", { data: data });
-});
-
-
 
 router.get("/admin",checkSignIn, (req, res) => {
   const message = req.query.message || "";
@@ -38,6 +32,13 @@ router.get("/admin",checkSignIn, (req, res) => {
     res.render("admin", { data: response, message: message });
   });
 });
+
+
+router.get("/adminlogin", (req, res) => {
+  const data = "";
+  res.render("adminLogin", { data: data });
+});
+
 
 
 router.post("/adminlogin", async (req, res) => {
@@ -66,6 +67,7 @@ router.post("/adminlogin", async (req, res) => {
   }
 });
 
+// admin control panel accept / delete users=======================================
   
   router.get("/acceptPerson/:personId", async (req, res) => {
     const personId = req.params.personId;
@@ -110,6 +112,8 @@ router.post("/adminlogin", async (req, res) => {
     }
   });
 
+
+// admin reject / accept asssigned topic managers================================
 
 router.get('/delete/:id', async (req, res) => {
   try {
@@ -182,17 +186,6 @@ router.get('/assign', checkSignIn, (req, res) => {
 
 });
 
-router.get('/assign', (req, res) => {
-  topics.find((err, response) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Error fetching data");
-    }
-
-    res.render("assign", { data: response, error: " " });
-  });
-});
-
 router.post('/assign', async (req, res) => {
   const { name, email, topic, password } = req.body;
 
@@ -230,7 +223,6 @@ router.post('/assign', async (req, res) => {
     res.status(500).render('assign', { data: response, error: 'Internal Server Error' });
   }
 });
-
 
 
 
